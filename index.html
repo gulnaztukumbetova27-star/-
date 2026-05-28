@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Курс: Веб-разработка с HTML | Школа кода</title>
+    <!-- Шрифт Inter и вспомогательные стили -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* Цветовая схема: синий, голубой, белый, черный */
+        :root {
+            --blue-deep: #0a58ca;
+            --blue-bright: #0d6efd;
+            --sky-light: #e3f2fd;
+            --sky-soft: #cfe2ff;
+            --white: #ffffff;
+            --black: #000000;
+            --gray-dark: #1e293b;
+            --gray-light: #f1f5f9;
+        }
+
+        /* Общие стили */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Шапка */
+        .navbar {
+            background-color: var(--white);
+            border-bottom: 2px solid var(--blue-bright);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(4px);
+            background: rgba(255,255,255,0.96);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 0.9rem 1.5rem;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: var(--blue-deep);
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: var(--black);
+            font-weight: 500;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: var(--black);
+            transition: 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--blue-bright);
+            border-bottom: 2px solid var(--blue-bright);
+            padding-bottom: 4px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--sky-light) 0%, var(--white) 100%);
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--sky-soft);
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--black);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray-dark);
+            max-width: 700px;
+            margin-top: 0.8rem;
+        }
+
+        /* карточки и секции */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            border-left: 5px solid var(--blue-bright);
+            padding-left: 1rem;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            transition: transform 0.2s;
+            border: 1px solid var(--sky-soft);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(13,110,253,0.1);
+        }
+        .code-block {
+            background: #1e1e2f;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 14px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+        button {
+            background-color: var(--blue-bright);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+        button:hover {
+            background-color: var(--blue-deep);
+            transform: scale(0.97);
+        }
+        .demo-output {
+            background: var(--gray-light);
+            padding: 1rem;
+            border-radius: 16px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--blue-bright);
+            font-size: 0.95rem;
+        }
+        .test-question {
+            background: var(--sky-light);
+            padding: 1rem;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+        }
+        .quiz-option {
+            display: block;
+            margin: 0.6rem 0;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .quiz-option input {
+            margin-right: 12px;
+            transform: scale(1.1);
+        }
+        .result-badge {
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 0.5rem;
+        }
+        .live-editor {
+            background: #fef9e3;
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        textarea {
+            width: 100%;
+            font-family: 'Courier New', monospace;
+            background: #1e1e2f;
+            color: #f8f8f2;
+            border-radius: 14px;
+            padding: 0.8rem;
+            border: none;
+            resize: vertical;
+        }
+        iframe {
+            width: 100%;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            margin-top: 0.8rem;
+        }
+        footer {
+            background: var(--black);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--blue-bright);
+            color: var(--blue-bright);
+        }
+        .btn-outline:hover {
+            background: var(--blue-bright);
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin: 1rem 0;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">Gulnaz<span>Code</span></div>
+        <ul class="nav-links">
+            <li><a href="#" class="active" data-page="home">Главная</a></li>
+            <li><a href="#" data-page="lessons">Уроки</a></li>
+            <li><a href="#" data-page="practice">Практика</a></li>
+            <li><a href="#" data-page="tests">Тестики</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main id="app-root">
+    <!-- Контент будет динамически подгружаться через JS (одностраничная навигация) -->
+</main>
+
+<footer>
+    <p>© 2025 Курс по HTML — для учеников 10-11 классов | Синий, голубой, белый, черный | Inter шрифт</p>
+    <p style="margin-top: 0.5rem; font-size:0.8rem;">Интерактивные элементы: ✅ Интерактивный тест ✅ Тесты с автопроверкой</p>
+</footer>
+
+<script>
+    // ИНТЕРАКТИВНЫЕ ЭЛЕМЕНТЫ: 
+    // 1. Редактор кода с предпросмотром (выполнение html/css прямо на сайте)
+    // 2. Видеоуроки (встроенные YouTube)
+    // 3. Тесты с автопроверкой (мгновенная обратная связь)
+    // + дополнительные элементы (упражнения с выполнением в браузере через редактор)
+
+    // Данные страниц (упрощенная SPA)
+    const pages = {
+        home: () => `
+            <section class="hero">
+                <div class="container">
+                    <h1>Создай свой первый сайт с нуля 🚀</h1>
+                    <p>Интерактивный курс по HTML для начинающих веб-разработчиков. Изучай теги, структуру страницы и создавай живые проекты прямо в браузере!</p>
+                </div>
+            </section>
+                                <div class="card">
+                        <h3>⚡ Интерактивность</h3>
+                        <p>Выполняй код прямо на сайте, проходи тесты с мгновенной проверкой и смотри видеоуроки.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🎯 Результат</h3>
+                        <p>Твой первый HTML-сайт, знание основ верстки и понимание веб-технологий.</p>
+                    </div>
+                </div>
+                                                            `,
+        lessons: () => `
+            <div class="container">
+                <h2 class="section-title">📖 Уроки HTML</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>Урок 1: Структура документа</h3>
+                        <p>!DOCTYPE, html, head, body — что это и зачем.</p>
+                        <div class="code-block">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;&lt;title&gt;Сайт&lt;/title&gt;&lt;/head&gt;<br>&lt;body&gt;...&lt;/body&gt;<br>&lt;/html&gt;</div>
+                    </div>
+                    <div class="card">
+                        <h3>Урок 2: Текст и заголовки</h3>
+                        <p>h1-h6, p, strong, em. Семантическая верстка.</p>
+                        <div class="code-block">&lt;h1&gt;Главный заголовок&lt;/h1&gt;<br>&lt;p&gt;Абзац текста с &lt;strong&gt;жирным&lt;/strong&gt; словом.&lt;/p&gt;</div>
+                    </div>
+                    <div class="card">
+                        <h3>Урок 3: Списки и ссылки</h3>
+                        <p>ul, ol, li, a (гиперссылки). Навигация по сайту.</p>
+                        <div class="code-block">&lt;ul&gt;&lt;li&gt;HTML&lt;/li&gt;&lt;li&gt;CSS&lt;/li&gt;&lt;/ul&gt;<br>&lt;a href="https://example.com"&gt;Перейти&lt;/a&gt;</div>
+                    </div>
+                    <div class="card">
+                        <h3>Урок 4: Изображения и таблицы</h3>
+                        <p>img, table, tr, td. Добавляем визуальный контент.</p>
+                        <div class="code-block">&lt;img src="photo.jpg" alt="описание"&gt;<br>&lt;table&gt;&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</div>
+                    </div>
+                </div>
+                                </div>
+        practice: () => 
+                                            <!-- интерактивный тест прямо на странице практики тоже -->
+                <h2 class="section-title" style="margin-top:2rem;">🧪 Интерактивный тест: проверь знания</h2>
+                <div id="quickTestBlock" class="test-question"></div>
+            </div>
+        tests: () => `
+            <div class="container">
+                <h2 class="section-title">📝 Тестирование с автопроверкой</h2>
+                <div id="testContainer"></div>
+            </div>
+    };
+
+    // Глобальный рендер контента
+    let currentPage = "home";
+
+    function renderPage(pageName) {
+        const root = document.getElementById('app-root');
+        if(root && pages[pageName]) {
+            root.innerHTML = pages[pageName]();
+            // после рендера нужно привязать все динамические элементы
+            attachDynamicHandlers();
+            // дополнительно если тестовая страница или блок теста на tests
+            if(pageName === 'tests') {
+                renderFullTest();
+            }
+            // также на странице practice создаем тест если он есть в отдельном div
+            if(pageName === 'practice') {
+                renderQuickTestInsidePractice();
+            }
+        }
+        // обновить активный пункт меню
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            const pageAttr = link.getAttribute('data-page');
+            link.classList.toggle('active', pageAttr === pageName);
+        });
+    }
+
+    function attachDynamicHandlers() {
+        // 1) Живой редактор на главной (первый интерактивный элемент - выполнение кода)
+        const runBtn = document.getElementById('runCodeBtn');
+        if(runBtn) {
+            runBtn.onclick = () => {
+                const code = document.getElementById('liveCodeEditor')?.value || '';
+                const previewDiv = document.getElementById('previewResult');
+                if(previewDiv) previewDiv.innerHTML = code;
+            };
+            // запустим сразу превью
+            if(document.getElementById('liveCodeEditor') && document.getElementById('previewResult')) {
+                document.getElementById('previewResult').innerHTML = document.getElementById('liveCodeEditor').value;
+            }
+        }
+        // редактор уроков
+        const lessonRun = document.getElementById('lessonRunBtn');
+        if(lessonRun) {
+            lessonRun.onclick = () => {
+                const code = document.getElementById('lessonEditor')?.value;
+                const preview = document.getElementById('lessonPreview');
+                if(preview) preview.innerHTML = code;
+            };
+            if(document.getElementById('lessonEditor') && document.getElementById('lessonPreview')) {
+                document.getElementById('lessonPreview').innerHTML = document.getElementById('lessonEditor').value;
+            }
+        }
+        // практика редактор
+        const practiceRun = document.getElementById('practiceRunBtn');
+        if(practiceRun) {
+            practiceRun.onclick = () => {
+                const code = document.getElementById('practiceEditor')?.value;
+                const preview = document.getElementById('practicePreview');
+                if(preview) preview.innerHTML = code;
+            };
+            if(document.getElementById('practiceEditor') && document.getElementById('practicePreview')) {
+                document.getElementById('practicePreview').innerHTML = document.getElementById('practiceEditor').value;
+            }
+        }
+        const imageTaskBtn = document.getElementById('imageTaskBtn');
+        if(imageTaskBtn) {
+            imageTaskBtn.onclick = () => {
+                const code = document.getElementById('imageTaskEditor')?.value;
+                const preview = document.getElementById('imageTaskPreview');
+                if(preview) preview.innerHTML = code;
+            };
+            if(document.getElementById('imageTaskEditor') && document.getElementById('imageTaskPreview')) {
+                document.getElementById('imageTaskPreview').innerHTML = document.getElementById('imageTaskEditor').value;
+            }
+        }
+    }
+
+    // Тест с автопроверкой (полноценная викторина) - третий интерактивный элемент
+    function renderFullTest() {
+        const container = document.getElementById('testContainer');
+        if(!container) return;
+        container.innerHTML = `
+            <div class="test-question">
+                <h3>❓ Вопрос 1. Какой тег используется для создания гиперссылки?</h3>
+                <label class="quiz-option"><input type="radio" name="q1" value="a"> &lt;link&gt;</label>
+                <label class="quiz-option"><input type="radio" name="q1" value="b"> &lt;a&gt;</label>
+                <label class="quiz-option"><input type="radio" name="q1" value="c"> &lt;href&gt;</label>
+            </div>
+            <div class="test-question">
+                <h3>❓ Вопрос 2. Какой атрибут задает альтернативный текст для изображения?</h3>
+                <label class="quiz-option"><input type="radio" name="q2" value="a"> title</label>
+                <label class="quiz-option"><input type="radio" name="q2" value="b"> src</label>
+                <label class="quiz-option"><input type="radio" name="q2" value="c"> alt</label>
+            </div>
+            <div class="test-question">
+                <h3>❓ Вопрос 3. Какой тег определяет заголовок первого уровня?</h3>
+                <label class="quiz-option"><input type="radio" name="q3" value="a"> &lt;h6&gt;</label>
+                <label class="quiz-option"><input type="radio" name="q3" value="b"> &lt;heading&gt;</label>
+                <label class="quiz-option"><input type="radio" name="q3" value="c"> &lt;h1&gt;</label>
+            </div>
+            <button id="submitTestBtn" style="background:#0a58ca;">✅ Проверить ответы</button>
+            <div id="testResult" class="result-badge" style="margin-top:20px;"></div>
+        `;
+        const submitBtn = document.getElementById('submitTestBtn');
+        if(submitBtn) {
+            submitBtn.onclick = () => {
+                let q1 = document.querySelector('input[name="q1"]:checked')?.value;
+                let q2 = document.querySelector('input[name="q2"]:checked')?.value;
+                let q3 = document.querySelector('input[name="q3"]:checked')?.value;
+                let score = 0;
+                if(q1 === 'b') score++;
+                if(q2 === 'c') score++;
+                if(q3 === 'c') score++;
+                const resultDiv = document.getElementById('testResult');
+                resultDiv.innerHTML = `<span style="background:${score===3?'#0a58ca':'#8B0000'}; color:white; padding:0.5rem 1rem; border-radius:40px;">Ваш результат: ${score} из 3. ${score===3 ? 'Отлично! ✨' : 'Попробуй еще раз, изучи уроки.'}</span>`;
+            };
+        }
+    }
+
+    function renderQuickTestInsidePractice() {
+        const block = document.getElementById('quickTestBlock');
+        if(!block) return;
+        block.innerHTML = `
+            <h3>🧠 Мини-тест: Теги HTML</h3>
+            <p>Что делает тег <code>&lt;strong&gt;</code>?</p>
+            <label class="quiz-option"><input type="radio" name="quizQuick" value="a"> Делает курсив</label>
+            <label class="quiz-option"><input type="radio" name="quizQuick" value="b"> Выделяет жирным и семантически важным</label>
+            <label class="quiz-option"><input type="radio" name="quizQuick" value="c"> Создает список</label>
+            <button id="quickCheckBtn">Ответить</button>
+            <div id="quickResult"></div>
+        `;
+        const quickBtn = document.getElementById('quickCheckBtn');
+        if(quickBtn) {
+            quickBtn.onclick = () => {
+                const selected = document.querySelector('input[name="quizQuick"]:checked')?.value;
+                const resDiv = document.getElementById('quickResult');
+                if(selected === 'b') resDiv.innerHTML = '<span style="color:#0a58ca; font-weight:bold;">✔ Верно! strong добавляет жирное начертание и важен для SEO.</span>';
+                else resDiv.innerHTML = '<span style="color:#b91c1c;">✘ Неправильно. Тег &lt;strong&gt; придает жирность и смысловое выделение.</span>';
+            };
+        }
+    }
+
+    // Навигация по меню и начальная загрузка
+    document.addEventListener('DOMContentLoaded', () => {
+        renderPage('home');
+        const links = document.querySelectorAll('.nav-links a');
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('data-page');
+                if(page && pages[page]) {
+                    currentPage = page;
+                    renderPage(page);
+                    window.scrollTo({top:0, behavior:'smooth'});
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
